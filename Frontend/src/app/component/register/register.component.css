@@ -1,0 +1,44 @@
+.active {
+    background-color: #ff3300;
+    color: white;
+}
+.ng-invalid.ng-touched {
+    color: #55595c;
+    background-color: #fff;
+    border-color: red;
+    outline: 0;
+}
+.ng-valid.ng-touched {
+    color: #55595c;
+    background-color: #fff;
+    border-color: green;
+    outline: 0;
+}
+.form-control{
+    padding-left:25px ;
+}
+
+.pos{
+    position: absolute;
+    top: 44px;
+    left: 21px;
+    color: green;
+}
+.loading  {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #06060624;
+    z-index: 5;
+}
+.ensent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #0f0f0e30;
+    z-index: 2;
+    left: 0px;
+    top: 0
+}

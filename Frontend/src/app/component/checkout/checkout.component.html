@@ -1,0 +1,299 @@
+<div style="    margin-top: 20px;" class="top-links">
+    <div class="container">
+        <ul class="row links">
+            <li class="col-xs-12 col-sm-3 link-item "><span>1</span><a [routerLink]="['/search/restaurant']" >
+                Choisissez un restaurant</a></li>
+            <li class="col-xs-12 col-sm-3 link-item "><span>2</span><a [routerLink]="['/search/repas']">
+                Choisissez votre repas  préférée</a></li>
+            <li class="col-xs-12 col-sm-3 link-item "><span>3</span><a [routerLink]="['/checkout']">Choisissez votre emplacement</a>
+            </li>
+            <li class="col-xs-12 col-sm-3 link-item active"><span>4</span><a [routerLink]="['/checkout']">Commandez en ligne </a></li>
+        </ul>
+    </div>
+</div>
+<div *ngIf="loading" style="    position: fixed;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: #00000045;">       
+        <div style="top:50%" class="lds-facebook"><div></div><div></div><div></div></div>
+</div>
+
+<div class="container m-t-30">
+    <div class="widget clearfix">
+        <!-- /widget heading -->
+        <div class="widget-heading">
+            <h3 class="widget-title text-dark">
+                Résumé du panier
+            </h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="widget-body">
+            <form [formGroup]="adressForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-sm-6 margin-b-30">
+                        <div style="    background-color: #c33332;
+                        padding: 10px;
+                        margin-bottom: 20px;" *ngIf="errors" class="alert alert-danger">
+                            <ul>
+                                <li *ngFor="let error of errors">{{error}}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div *ngIf="user" class="payment-option">
+                                <ul style="overflow: hidden; padding-left: 20px;" class=" list-unstyled">
+                                    <li>
+                                        <label (click)="verifIsNewAdress()" class="custom-control custom-radio  m-b-20">
+                                            <input checked name="adresse" type="radio" class="custom-control-input">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description">
+                                                Ancienne adresse
+
+                                            </span> </label>
+                                        <div *ngIf="!isNewAdress" class="col-sm-12 margin-b-30">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div *ngIf="user.lang && user.lat" class="form-group">
+                                                        <button type="button" class="btn btn-success" data-toggle="modal"
+                                                            data-target="#Voiradresse" (click)="setVoiradresse()" style="margin-right: 20px;">Voir Mon Adresse</button>
+                                                        <button  type="button" class="btn btn-info" data-toggle="modal"
+                                                            data-target="#Ajoutadresse" (click)="setAjoutMap()">Modifier</button>
+                                                    </div>
+                                                    <div *ngIf="!user.lang || !user.lat" class="form-group">
+                                                        <button  type="button" class="btn btn-info" data-toggle="modal"
+                                                            data-target="#Ajoutadresse" (click)="setAjoutMap()">Ajouter Adresse</button>
+                                                    </div>
+                                                    <!--/form-group-->
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <label (click)="verifIsNewAdress()" class="custom-control custom-radio  m-b-10">
+                                            <input id="inputNewAdress" name="adresse" type="radio"
+                                                class="custom-control-input"> <span
+                                                class="custom-control-indicator"></span> <span
+                                                class="custom-control-description"> Ajouter une nouvelle adresse</span>
+                                        </label>
+                                        <div *ngIf="isNewAdress" class="col-sm-12 margin-b-30">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+
+                                                    <div *ngIf="NewAdress" class="form-group">
+                                                        <button type="button" class="btn btn-success" data-toggle="modal"
+                                                            data-target="#Voiradresse" (click)="setVoiradresse()" style="margin-right: 20px;">Voir Mon Adresse</button>
+                                                        <button  type="button" class="btn btn-info" data-toggle="modal"
+                                                            data-target="#Ajoutadresse" (click)="setAjoutMap()">Modifier</button>
+                                                    </div>
+
+                                                    <div *ngIf="!NewAdress" class="form-group">
+                                                        <button  type="button" class="btn btn-info" data-toggle="modal"
+                                                            data-target="#Ajoutadresse" (click)="setAjoutMap()">Ajouter Adresse</button>
+                                                    </div>
+                                                    <!--/form-group-->
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-body cart-addon" style="padding: 26px;">
+                            <div *ngFor="let item of cart.items" class="food-item">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-9 col-lg-9">
+                                        <div class="item-img pull-left">
+                                            <a class="restaurant-logo pull-left" href="#"><img
+                                                    src="{{global.verifLogo(item.product.photo,item.product.name)}}"
+                                                    alt="{{item.product.name}}"></a>
+                                        </div>
+                                        <!-- end:Logo -->
+                                        <div class="rest-descr">
+                                            <h6><a>{{item.product.name}}</a></h6>
+                                        </div>
+                                        <!-- end:Description -->
+                                    </div>
+                                    <!-- end:col -->
+                                    <div class="col-xs-12 col-sm-3 col-lg-3 text-xs-center">
+                                        <p style="font-weight: bold;" class="price pull-left">
+                                            {{item.product.prix}} TND
+                                            <br>
+                                            <span style="font-weight: 500;"> x{{item.quantity}} </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- end:row -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="cart-totals margin-b-20">
+                            <div class="cart-totals-title">
+                                <h4>Résumé du panier</h4>
+                            </div>
+                            <div class="cart-totals-fields">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Total HT</td>
+                                            <td>{{cart.total}} TND</td>
+                                        </tr>
+                                        <tr>
+                                            <td> TVA </td>
+                                            <td>{{strSub(cart.getTVA())}} TND</td>
+                                        </tr>
+                                        <tr style="position: relative;">
+                                            <div *ngIf="totalDistance  == null" style="  
+                                            z-index: 10;
+                                            width: 100%;
+                                            height: 100%;
+                                            left: 0;
+                                            top: 0;
+                                           ">       
+                                                <div class="lds-facebook"><div></div><div></div><div></div></div>
+                                             </div>
+                                        </tr>
+                                        <tr *ngIf="totalDistance != null">
+                                            <td > Frais de livraison </td>
+                                            <td  >{{ strSub(global.fraisParKl*totalDistance) }} TND</td>
+                                        </tr>
+                                        <tr *ngIf="coupon">
+                                            <td> Coupon : {{coupon.code}}({{coupon.remise}}%) </td>
+                                            <td *ngIf="totalDistance" >{{strSub( cart.getTotalTva()*(coupon.remise/100)) }} TND</td>
+                                        </tr>
+                                        <tr *ngIf="totalDistance  != null">
+                                            <td  class="text-color"><strong> Total TTC </strong></td>
+                                            <td  class="text-color">
+                                                <strong *ngIf="!coupon">{{strSub(cart.getTotalTva() + global.fraisParKl*totalDistance)}} TND</strong>
+                                                <strong *ngIf="coupon">{{strSub(cart.getTotalTva() + global.fraisParKl*totalDistance - cart.getTotalTva()*(coupon.remise/100)) }} TND</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--cart summary-->
+                        <div class="payment-option">
+                            <ul style="overflow: hidden; padding-left: 20px;" class=" list-unstyled">
+                                <li>
+                                    <label (click)="verifIsCreditCard()" class="custom-control custom-radio  m-b-20">
+                                        <input checked name="radio-stacked" type="radio" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">
+                                            Paiement à la livraison
+                                        </span> </label>
+                                </li>
+                                <li>
+                                    <div  class="custom-form ">
+                                        <label for="CodeCoupon">
+                                            Code Coupon :
+                                        </label> <br *ngIf="!coupon">
+                                        <button style="margin-left: 10px;" *ngIf="coupon" (click)="coupon=null" type="button" class="btn btn-info">Modifier</button>
+                                        <input *ngIf="!coupon"  id="CodeCoupon" name="CodeCoupon" type="text" class="custom-control testbtn">
+
+                                        <button *ngIf="!coupon"   (click)="setCoupon()"  class="btn btn-info" type="button"><span *ngIf="!couponLoading">Appliquer Coupon</span> <i *ngIf="couponLoading" class="fa fa-spinner fa-spin" aria-hidden="true"></i></button>
+                                    
+                                    </div>
+                                </li>
+                                <!-- <li>
+                                    <label  (click)="verifIsCreditCard()" class="custom-control custom-radio  m-b-10">
+                                        <input id="inputCreditCart" name="radio-stacked" type="radio"
+                                            class="custom-control-input"> <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">carte bancaire <img
+                                                style="    height: 31px; width: 31px;"
+                                                src="../../../assets/images/credit.png" alt="" width="90"></span>
+                                    </label>
+                                    <div *ngIf="isCreditCart" class="col-sm-12 margin-b-30">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Carte Number</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="124, Lorem Street.."> </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Mois / Ans*</label>
+                                                    <input type="text" class="form-control" placeholder="Jaipur"> </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Code*</label>
+                                                    <input type="text" class="form-control" placeholder="302012"> </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <label (click)="verifIsCreditCard()" class="custom-control custom-radio  m-b-10">
+                                        <input name="radio-stacked" type="radio" class="custom-control-input"> <span
+                                            class="custom-control-indicator"></span> <span
+                                            class="custom-control-description">Paypal <img
+                                                src="../../../assets/images/paypal.jpg" alt="" width="90"></span>
+                                    </label>
+                                </li> -->
+                            </ul>
+
+
+                            <p class="text-xs-center">
+                                <button [disabled]="!totalDistance && isclicked" type="submit" (submit)="onSubmit()" class="btn btn-outline-success btn-block"> payez maintenant </button>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end:page wrapper -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="Ajoutadresse" tabindex="-1" role="dialog" aria-hidden="true">
+        <div style="width: 50%;" class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" i class="close" data-dismiss="modal" aria-label="Close" id="closeAjoutadresse"> <span aria-hidden="true">&times;</span> </button>
+                <div class="modal-body cart-addon">
+                    <div style="width: 100%; height: 300px;" id="AjoutMaps"  class="food-item white">
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" *ngIf="!isNewAdress" style="margin-left:10px;" (click)="editPosition()" class="btn theme-btn">Ajouter</button>
+                    <button type="button" *ngIf="isNewAdress"  style="margin-left:10px;" (click)="changeNewAdresse()" class="btn theme-btn">Ajouter</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="Voiradresse" tabindex="-1" role="dialog" aria-hidden="true">
+        <div style="width: 50%;" class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" i class="close" data-dismiss="modal" aria-label="Close" id="closeVoiradresse"> <span aria-hidden="true">&times;</span> </button>
+                <div class="modal-body cart-addon">
+                    <div style="width: 100%; height: 300px;" id="VoirMaps"  class="food-item white">
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>

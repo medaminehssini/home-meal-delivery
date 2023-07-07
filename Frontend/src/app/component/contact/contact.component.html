@@ -1,0 +1,98 @@
+<!-- start: Inner page hero -->
+<section class="bg-image space-md" data-image-src="../../../assets/images/bg-contact.jpg">
+    <div class="profile">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4  col-lg-4 profile-img">
+                    <h1 class="font-white">Contactez-nous
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end:Inner page hero -->
+<div class="breadcrumb">
+    <div class="container">
+        <ul>
+            <li>Contact</li>
+        </ul>
+    </div>
+</div>
+<section class="contact-page inner-page">
+    <div class="container">
+        <div class="row">
+            <!-- REGISTER -->
+            <div class="col-md-8">
+                <div class="widget">
+                    <div class="widget-body">
+                       <form [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm)">
+                        <!-- Contact form -->
+                         <div class="form-horizontal contact-form" role="form">
+                            <fieldset>
+                                <div class="row form-group">
+                                    <div class="col-xs-6">
+                                        <input class="form-control" id="fname" formControlName="fname" name="fname" type="text" placeholder="Nom *" required=""> 
+                                        <i *ngIf="contactForm.get('fname').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                                        <i *ngIf="contactForm.get('fname').invalid && contactForm.get('fname').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input class="form-control" id="lname" formControlName="lname" name="lname" type="text" placeholder="Prenom *" required="">
+                                        <i *ngIf="contactForm.get('lname').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                                        <i *ngIf="contactForm.get('lname').invalid && contactForm.get('lname').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-xs-6">
+                                        <input class="form-control" id="email" formControlName="email" name="email" type="email" placeholder="Email *" required=""> 
+                                        <i *ngIf="contactForm.get('email').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                                        <i *ngIf="contactForm.get('email').invalid && contactForm.get('email').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input class="form-control" id="phone" formControlName="tel" name="tel" type="tel" placeholder="Téléphone *"> 
+                                        <i *ngIf="contactForm.get('tel').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                                        <i *ngIf="contactForm.get('tel').invalid && contactForm.get('tel').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" id="subject" formControlName="subject" name="subject" type="text" placeholder="Subject *" required="">
+                                        <i *ngIf="contactForm.get('subject').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                                        <i *ngIf="contactForm.get('subject').invalid && contactForm.get('subject').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-xs-12">
+                                        <textarea class="form-control" id="message" formControlName="message" name="message" rows="10" placeholder="Message *" required=""></textarea>
+                                        <i *ngIf="contactForm.get('message').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                                        <i *ngIf="contactForm.get('message').invalid && contactForm.get('message').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-xs-12">
+                                        <button [disabled]="issent ||  contactForm.invalid" style="padding-left: 35px;"  class="btn btn-lg theme-btn" type="submit">
+                                            Envoyer un Message
+                                        </button>
+                                        <i *ngIf="issent" class="fa fa-spinner fa-spin pos"
+                                        style=" color:#fafaf8;top: 14px; font-size:24px"></i>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <!-- End Contact form -->
+                    </form>
+                    </div>
+                </div>
+                <!-- end: Widget -->
+            </div>
+            <!-- /REGISTER -->
+            <!-- WHY? -->
+            <div class="col-md-4">
+                <div id="map" style="height: 506px;">
+
+                </div>
+            </div>
+            <!-- /WHY? -->
+        </div>
+    </div>
+</section>

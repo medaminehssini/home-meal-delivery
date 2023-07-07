@@ -1,0 +1,113 @@
+<section class="app-section">
+    <div class="app-wrap">
+        <div class="container">
+            <div class="row text-img-block text-xs-left">
+                <div class="container">
+                    <div class="col-xs-12 col-sm-5 right-image text-center">
+                        <figure> <img src="../../../assets/images/app.png" alt="Right Image" class="img-fluid">
+                        </figure>
+                    </div>
+                    <div class="col-xs-12 col-sm-7 left-text">
+                        <h3>Notre Application</h3>
+                        <p>Vous pouvez maintenant commander votre repas où vous êtes grâce à notre service de livraison
+                            rapide &amp; notre application gratuite.</p>
+                        <div class="social-btns">
+                            <a href="#" class="app-btn apple-button clearfix">
+                                <div class="pull-left"><i class="fa fa-apple"></i> </div>
+                                <div class="pull-right"> <span class="text">Disponible pour</span> <span
+                                        class="text-2">IOS</span> </div>
+                            </a>
+                            <a href="#" class="app-btn android-button clearfix">
+                                <div class="pull-left"><i class="fa fa-android"></i> </div>
+                                <div class="pull-right"> <span class="text">Disponible pour</span> <span
+                                        class="text-2">Android</span> </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- start: FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <!-- top footer statrs -->
+        <div class="row top-footer">
+            <div class="col-xs-12 col-sm-3 footer-logo-block color-gray">
+                <a [routerLink]="['/']" > <img src="../../../../assets/images/kgsexpress.png" height="85px" alt="kgsexpress logo">
+                </a> <span>Livraison à domicile </span> </div>
+                <div class="col-xs-12 col-sm-4 address color-gray">
+                    <h5>Adresse  </h5>
+                    <p>Best Solutions, Avenue Monji Slim, Sakiet Ezzit</p>
+                    <h5>Phone: <a href="tel:+21674852552">+21674852552</a></h5>
+                </div>
+                <div class="col-xs-12 col-sm-5 additional-info color-gray">
+                    <h5>Addition informations</h5>
+                    <p>Rejoignez les milliers d'autres restaurants qui bénéficient d'avoir leurs menus sur TunexExpress</p>
+                </div>
+        </div>
+        <!-- top footer ends -->
+        <!-- bottom footer statrs -->
+
+        <!-- bottom footer ends -->
+    </div>
+</footer>
+
+
+
+<div style="top: 50%;transform: translateY(-50%);     overflow: hidden;height: 100%;" class="modal fade"
+    id="login-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button
+                id="closeLoginForm"  style="font-weight: bold;top:0;right:4px;font-size:30px; background-color: transparent;    color: black;z-index: 99;"
+                type="button" class="close" data-dismiss="modal" aria-label="Close"> <span
+                    aria-hidden="true">&times;</span> </button>
+            <div class="modal-body cart-addon" style="padding: 26px;">
+                <!-- Contact form -->
+                <div class="form-horizontal contact-form" role="form">
+                    <form [formGroup]="loginForm" (ngSubmit)="login()" >
+                        <div class="row form-group">
+                            <h3 style="font-weight: bold; text-align: center;"> S'identifier </h3>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-12">
+                                <label for="emaillogin"> Adresse électronique * : </label>
+                                <input class="form-control" id="emaillogin" type="email"  formControlName="email"
+                                     required="">
+                                 <i *ngIf="loginForm.get('email').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                                <i *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i> 
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-12">
+                                <label for="passwordlogin">Mot de passe * : </label>
+                                <input class="form-control" id="passwordlogin" type="password"  formControlName="password"
+                                     required="">
+                                <i *ngIf="loginForm.get('password').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                                <i *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i> 
+
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-xs-12">
+                                <button [disabled]="issent ||  loginForm.invalid" style="padding-left: 35px;" class="btn btn-lg theme-btn" type="submit"> 
+                                    s'identifier
+                                </button>
+                                <i *ngIf="issent" class="fa fa-spinner fa-spin pos"
+                                    style=" color:#fafaf8;top: 14px; font-size:24px"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        <a [routerLink]="['/register']" (click)="closeLogin()"  > Vous n'avez pas de compte ? </a>
+                    </div>
+                    <!-- End Contact form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:Footer -->

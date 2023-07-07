@@ -1,0 +1,9 @@
+<div class="user-account-nav user-account-sidebar">
+    <div class="user-nav-list">
+        <ul>
+            <li routerLinkActive="active"><a [routerLink]="['/user/order-list']" class="btn-edit-profile"><i class="fa fa-shopping-cart"></i>Mes commandes </a></li>
+            <li routerLinkActive="active"><a [routerLink]="['/user/edit']" ><i class="fa fa-sliders"></i>Paramètres du compte</a></li>
+            <li routerLinkActive="active"><a (click)="logout()" ><i class="fa fa-sign-out"></i>Déconnecter</a></li>
+        </ul>
+    </div>
+</div>

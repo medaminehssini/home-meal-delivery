@@ -1,0 +1,14 @@
+.menu-widget {
+    margin-bottom: 25px;
+}
+.main-block .scroll {
+    cursor: pointer;    user-select:none;
+
+}
+.main-block .active{
+    color: #f30;
+}
+
+.title-row a {
+  cursor: pointer;
+}

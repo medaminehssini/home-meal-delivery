@@ -1,0 +1,314 @@
+<!-- top Links -->
+<div class="top-links" style="    margin-top: 15px;" >
+    <div class="container">
+        <ul class="row links">
+            <li class="col-xs-12 col-sm-3 link-item"><span>1</span><a [routerLink]="['/routePath']"  >Choisissez votre emplacement</a>
+            </li>
+            <li class="col-xs-12 col-sm-3 link-item"><span>2</span><a [routerLink]="['/search/restaurant']">Choisissez le
+                    restaurant</a></li>
+            <li class="col-xs-12 col-sm-3 link-item active"><span>3</span><a  [routerLink]="['/search']" >Précisez votre repas
+                    préféré</a></li>
+            <li class="col-xs-12 col-sm-3 link-item"><span>4</span><a [routerLink]="['/cart']">Commandez et recevoir votre
+                    livraison</a></li>
+        </ul>
+    </div>
+</div>
+<!-- end:Top links -->
+<div *ngIf="!restaurant" class="lds-facebook"><div></div><div></div><div></div></div>
+<div *ngIf="restaurant">
+    <!-- start: Inner page hero -->
+    <section class="inner-page-hero bg-image" style="background: center center / cover no-repeat;" [ngStyle]="{'background-image': getBackground(restaurant)}"  >
+        <div class="profile">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12  col-md-4 col-lg-4 profile-img">
+                        <div class="image-wrap">
+                            <figure><img src="{{verifLogo(restaurant.logo ,restaurant.nom )}}" alt="Profile Image">
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
+                        <div class="pull-left right-text white-txt">
+                            <h6><a style="color: white;"> {{restaurant.nom}}</a></h6> 
+                            <p [innerHTML]="getSpecialite(restaurant.specialite)"></p>
+                            <ul class="nav nav-inline">
+                                <li class="nav-item"> <a class="nav-link active" ><i class="fa fa-check"></i> {{restaurant.minPrix}} TND</a> </li>
+                                <li class="nav-item ratings">
+                                    <a class="nav-link" > <span [innerHTML]="rateCode(restaurant.rate)">
+
+                                        </span> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end:Inner page hero -->
+    <div class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a [routerLink]="['/home']" class="active">Home</a></li>
+                <li><a href="#">Search results</a></li>
+                <li>Profile</li>
+            </ul>
+        </div>
+    </div>
+    <div class="container m-t-30">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+                <div class="sidebar clearfix m-b-20">
+                    <div class="main-block">
+                        <div class="sidebar-title white-txt">
+                            <h6>Choisir la cuisine</h6> <i class="fa fa-cutlery pull-right"></i>
+                        </div>
+                        <ul>
+                            <li *ngFor="let specialite of restaurant.specialite"
+                                [class.active]="isActive( specialite.id)" (click)="setActive( specialite.id)"><a
+                                    (click)="setSearch( specialite.id)" (click)="activeClass(this)"
+                                    class="scroll">{{specialite.nom}}</a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- end:Sidebar nav -->
+                    <div class="widget-delivery">
+                        <form>
+                            <div class="col-xs-6 col-sm-12 col-md-6 col-lg-6">
+                                <label class="custom-control custom-radio">
+                                    <input (click)="repas = true" id="radio1" name="radio" type="radio"
+                                        class="custom-control-input" checked="">
+                                    <span [ngStyle]="{'background-color':repas ? '#f30' : 'white' }"
+                                        class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">Repas</span> </label>
+                            </div>
+                            <div class="col-xs-6 col-sm-12 col-md-6 col-lg-6">
+                                <label class="custom-control custom-radio">
+                                    <input (click)="repas = false" id="radio2" name="radio" type="radio"
+                                        class="custom-control-input">
+                                    <span [ngStyle]="{'background-color':!repas ? '#f30' : 'white' }"
+                                        class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">Pack</span>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- end:Left Sidebar -->
+                <div class="widget clearfix">
+                    <!-- /widget heading -->
+                    <div class="widget-heading">
+                        <h3 class="widget-title text-dark">
+                            Popular tags
+                        </h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="widget-body">
+                        <ul class="tags">
+                            <li> <a href="#" class="tag">
+                                    Coupons
+                                </a> </li>
+                            <li> <a href="#" class="tag">
+                                    Discounts
+                                </a> </li>
+                            <li> <a href="#" class="tag">
+                                    Deals
+                                </a> </li>
+                            <li> <a href="#" class="tag">
+                                    Amazon
+                                </a> </li>
+                            <li> <a href="#" class="tag">
+                                    Ebay
+                                </a> </li>
+                            <li> <a href="#" class="tag">
+                                    Fashion
+                                </a> </li>
+                            <li> <a href="#" class="tag">
+                                    Shoes
+                                </a> </li>
+                            <li> <a href="#" class="tag">
+                                    Kids
+                                </a> </li>
+                            <li> <a href="#" class="tag">
+                                    Travel
+                                </a> </li>
+                            <li> <a href="#" class="tag">
+                                    Hosting
+                                </a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6">
+                <div *ngIf="repas">
+                    <div *ngFor="let specialite of restaurant.specialite |filter:filterText" class="menu-widget"
+                        id="{{specialite.id}}">
+                        <div class="widget-heading">
+                            <h3 class="widget-title text-dark">
+                                {{specialite.nom}} <a class="btn btn-link pull-right" data-toggle="collapse"
+                                    href="#{{specialite.nom}}{{specialite.id}}" aria-expanded="true">
+                                    <i class="fa fa-angle-right pull-right"></i>
+                                    <i class="fa fa-angle-down pull-right"></i>
+                                </a>
+                            </h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="collapse in" id="{{specialite.nom}}{{specialite.id}}">
+                            <div *ngFor="let repas of filterRepasOfType(specialite.id)" [ngStyle]="{'white':color}"
+                                class="food-item ">
+                                {{changeColor()}}
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-lg-8">
+                                        <div class="rest-logo pull-left">
+                                            <a class="restaurant-logo pull-left"><img
+                                                    src="{{verifLogo(repas.image ,repas.libelle )}}"
+                                                    alt="{{specialite.nom}} logo"></a>
+                                        </div>
+                                        <!-- end:Logo -->
+                                        <div class="rest-descr">
+                                            <h6><a>{{repas.libelle}}</a></h6>
+                                            <p>{{repas.description}}</p>
+                                        </div>
+                                        <!-- end:Description -->
+                                    </div>
+                                    <!-- end:col -->
+                                    <div class="col-xs-12 col-sm-12 col-lg-4 pull-right item-cart-info"> <span
+                                            class="price pull-left">{{repas.prix}} TND</span>
+                                        <a (click)="this.cart.addToCart(repas);"
+                                            class="btn btn-small btn btn-secondary pull-right" data-toggle="modal"
+                                            data-target="#order-modal">&#43;</a>
+                                    </div>
+                                </div>
+                                <!-- end:row -->
+                            </div>
+                        </div>
+                        <!-- end:Collapse -->
+                    </div>
+                </div>
+                <div *ngIf="restaurant.pack[0] && !repas" class="menu-widget" id="pack">
+                    <div class="widget-heading">
+                        <h3 class="widget-title text-dark">
+                            Pack <a class="btn btn-link pull-right" data-toggle="collapse" href="#pack"
+                                aria-expanded="true">
+                                <i class="fa fa-angle-right pull-right"></i>
+                                <i class="fa fa-angle-down pull-right"></i>
+                            </a>
+                        </h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="collapse in" id="pack">
+                        <div *ngFor="let pack of restaurant.pack" [ngClass]="{'white':color}" class="food-item ">
+                            {{changeColor()}}
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-lg-8">
+                                    <div class="rest-logo pull-left">
+                                        <a class="restaurant-logo pull-left"><img
+                                                src="{{verifLogo(pack.image ,pack.libelle )}}"
+                                                alt="{{pack.libelle}} logo"></a>
+                                    </div>
+                                    <!-- end:Logo -->
+                                    <div class="rest-descr">
+                                        <h6><a>{{pack.libelle}}</a></h6>
+                                        <p>{{pack.description}}</p>
+                                    </div>
+                                    <!-- end:Description -->
+                                </div>
+                                <!-- end:col -->
+                                <div class="col-xs-12 col-sm-12 col-lg-4 pull-right item-cart-info"> <span
+                                        class="price pull-left">{{pack.prix}}</span> <a href="#"
+                                        class="btn btn-small btn btn-secondary pull-right" data-toggle="modal"
+                                        data-target="#order-modal">&#43;</a> </div>
+                            </div>
+                            <!-- end:row -->
+                        </div>
+                    </div>
+                    <!-- end:Collapse -->
+                </div>
+                <!-- end:Widget menu -->
+                <!-- <div class="row m-t-30">
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" class="panel-toggle collapsed" href="#faq1" aria-expanded="false">Can I viverra sit amet quam eget lacinia?</a></h4> </div>
+                                    <div class="panel-collapse collapse" id="faq1" aria-expanded="false" role="article" style="height: 0px;">
+                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum ut erat a ultricies. Phasellus non auctor nisi, id aliquet lectus. Vestibulum libero eros, aliquet at tempus ut, scelerisque sit amet nunc. Vivamus id porta neque, in pulvinar ipsum. Vestibulum sit amet quam sem. Pellentesque accumsan consequat venenatis. Pellentesque sit amet justo dictum, interdum odio non, dictum nisi. Fusce sit amet turpis eget nibh elementum sagittis. Nunc consequat lacinia purus, in consequat neque consequat id.</div>
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" class="panel-toggle" href="#faq2"><i class="ti-info-alt"></i>What is the ipsum dolor sit amet quam tortor?</a></h4> </div>
+                                    <div class="panel-collapse collapse" id="faq2">
+                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum ut erat a ultricies. Phasellus non auctor nisi, id aliquet lectus. Vestibulum libero eros, aliquet at tempus ut, scelerisque sit amet nunc. Vivamus id porta neque, in pulvinar ipsum. Vestibulum sit amet quam sem. Pellentesque accumsan consequat venenatis. Pellentesque sit amet justo dictum, interdum odio non, dictum nisi. Fusce sit amet turpis eget nibh elementum sagittis. Nunc consequat lacinia purus, in consequat neque consequat id.</div>
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" class="panel-toggle" href="#faq3"><i class="ti-info-alt"></i>How does lorem ipsum work?</a></h4> </div>
+                                    <div class="panel-collapse collapse" id="faq3">
+                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum ut erat a ultricies. Phasellus non auctor nisi, id aliquet lectus. Vestibulum libero eros, aliquet at tempus ut, scelerisque sit amet nunc. Vivamus id porta neque, in pulvinar ipsum. Vestibulum sit amet quam sem. Pellentesque accumsan consequat venenatis. Pellentesque sit amet justo dictum, interdum odio non, dictum nisi. Fusce sit amet turpis eget nibh elementum sagittis. Nunc consequat lacinia purus, in consequat neque consequat id.</div>
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" class="panel-toggle" href="#faq4"><i class="ti-info-alt"></i>Can I ipsum dolor sit amet nascetur ridiculus?</a></h4> </div>
+                                    <div class="panel-collapse collapse" id="faq4">
+                                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum ut erat a ultricies. Phasellus non auctor nisi, id aliquet lectus. Vestibulum libero eros, aliquet at tempus ut, scelerisque sit amet nunc. Vivamus id porta neque, in pulvinar ipsum. Vestibulum sit amet quam sem. Pellentesque accumsan consequat venenatis. Pellentesque sit amet justo dictum, interdum odio non, dictum nisi. Fusce sit amet turpis eget nibh elementum sagittis. Nunc consequat lacinia purus, in consequat neque consequat id.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        /row -->
+            </div>
+            <!-- end:Bar -->
+            <div class="col-xs-12 col-md-12 col-lg-3">
+                <div class="sidebar-wrap">
+                    <div class="widget widget-cart">
+                        <div class="widget-heading">
+                            <h3 class="widget-title text-dark">
+                                Votre Panier
+                            </h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div *ngFor="let item of  this.cart.items" class="order-row bg-white">
+                            <div class="widget-body">
+                                <div class="title-row">{{item.product.name}} <a (click)="this.cart.removeCart(item.product.id)"><i
+                                            class="fa fa-trash pull-right"></i></a></div>
+                                <div class="form-group row no-gutter">
+                                    <div class="col-xs-8">
+                                            <label class="form-control b-r-0" id="exampleSelect1" style="    border: none;padding-left: 0;"  >Quantité :</label>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <input   (keyup.enter)="this.cart.updateCart(item.product.id,$event.srcElement.value)"  class="form-control" type="number" value="{{item.quantity}}" id="example-number-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end:Order row -->
+                        <div class="widget-delivery clearfix">
+                            <form>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 b-t-0">
+                                    <label class="custom-control custom-radio">
+                                        <input id="radio4" name="radio" type="radio" class="custom-control-input"
+                                            checked=""> <span class="custom-control-indicator"></span> <span
+                                            class="custom-control-description">Livraison</span> </label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="widget-body">
+                            <div class="price-wrap text-xs-center">
+                                <p>TOTAL</p>
+                                <h3 class="value"><strong>{{ this.cart.total }} TND</strong></h3>
+                                <p>Free Shipping</p>
+                                <button [routerLink]="['/checkout']"  type="button"
+                                    class="btn theme-btn btn-lg">Checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end:Right Sidebar -->
+        </div>
+        <!-- end:row -->
+    </div>
+    <!-- end:Container -->
+</div>

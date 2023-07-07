@@ -1,0 +1,124 @@
+    <div class="breadcrumb">
+       <div class="container">
+          <ul>
+             <li><a href="#" class="active">Home</a></li>
+             <li><a href="#">Search results</a></li>
+             <li>Profile</li>
+          </ul>
+       </div>
+    </div>
+    <section class="contact-page inner-page">
+       <div class="container">
+          <div class="row">
+             <!-- REGISTER -->
+             <div class="col-md-8">
+                <div class="widget">
+                   <div class="widget-body">
+                       <div  *ngIf="issent" class="loading">
+                            <div class="lds-facebook">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                       </div>
+                      <form action="#" [formGroup]="RegisterForm" (ngSubmit)="onSubmit()" style="background-color: #fafaf8">
+                         <div class="row">
+                            <div class="form-group col-sm-6">
+                               <label for="nom">Nom : </label>
+                               <input class="form-control" formControlName="nom" type="text" placeholder="votre nom" id="nom"> 
+                               <i *ngIf="RegisterForm.get('nom').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                               <i *ngIf="RegisterForm.get('nom').invalid && RegisterForm.get('nom').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                            </div>
+                            <div class="form-group col-sm-6">
+                               <label for="prenom">Prénom : </label>
+                               <input class="form-control" type="text" formControlName="prenom" placeholder="votre prénom" id="prenom"> 
+                               <i *ngIf="RegisterForm.get('prenom').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                               <i *ngIf="RegisterForm.get('prenom').invalid && RegisterForm.get('prenom').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                            </div>
+                            <div class="form-group col-sm-6">
+                               <label for="Email">Email :</label>
+                               <input type="email" class="form-control" id="Email" formControlName="email" placeholder="votre email">  
+                               <i *ngIf="RegisterForm.get('email').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                               <i *ngIf="RegisterForm.get('email').invalid && RegisterForm.get('email').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                            </div>
+                            <div class="form-group col-sm-6">
+                               <label for="télephone">Télephone :</label>
+                               
+                               <input class="form-control" type="tel"  formControlName="telephone" placeholder="votre télephone " id="télephone"> 
+                               <i *ngIf="RegisterForm.get('telephone').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                               <i *ngIf="RegisterForm.get('telephone').invalid && RegisterForm.get('telephone').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="Adresse">Adresse :</label>
+                                <input class="form-control" type="text"   formControlName="adresse" placeholder="votre Adresse " id="Adresse"> 
+                                <i *ngIf="RegisterForm.get('adresse').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                                <i *ngIf="RegisterForm.get('adresse').invalid && RegisterForm.get('adresse').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                            </div>
+                             <div class="form-group col-sm-3">
+                                <label for="Ville">Ville :</label>
+                                <input class="form-control" type="text"  formControlName="ville" placeholder="votre Ville " id="Ville"> 
+                                <i *ngIf="RegisterForm.get('ville').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                               <i *ngIf="RegisterForm.get('ville').invalid && RegisterForm.get('ville').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                             </div>
+                             <div class="form-group col-sm-3">
+                                <label for="codezip">Code postale :</label>
+                                <input class="form-control" type="text"  formControlName="codePostale" placeholder="votre Code postale " id="codezip"> 
+                                <i *ngIf="RegisterForm.get('codePostale').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                               <i *ngIf="RegisterForm.get('codePostale').invalid && RegisterForm.get('codePostale').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                             </div>
+
+                            <div class="form-group col-sm-6">
+                               <label for="mdp">Mot de passe : </label>
+                               <input type="password" class="form-control" id="mdp"  formControlName="password" placeholder="Mot de passe"> 
+                               <i *ngIf="RegisterForm.get('password').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                               <i *ngIf="RegisterForm.get('password').invalid && RegisterForm.get('password').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                            </div>
+                            <div class="form-group col-sm-6">
+                               <label for="Motdepasse">Confirmez le mot de passe                            </label>
+                               <input type="password" class="form-control" id="Motdepasse"  formControlName="password_confirmation" placeholder="Mot de passe"> 
+                               <i *ngIf="RegisterForm.get('password_confirmation').valid" class="fa fa-check-circle-o pos" aria-hidden="true"></i>
+                               <i *ngIf="RegisterForm.get('password_confirmation').invalid && RegisterForm.get('password_confirmation').touched" style="color:red;" class="fa fa-exclamation-triangle pos" aria-hidden="true"></i>
+                            </div>
+
+                         </div>
+                         <div class="row">
+                            <div class="form-group col-sm-6">
+                               <div class="btn-group" >
+                                  <label class="btn btn-secondary">
+                                  <input style="margin-right: 10px;" type="radio" name="type"  formControlName="type" value="client" id="option1" checked>Client</label>
+                                  <label class="btn btn-secondary">
+                                  <input style="margin-right: 10px;" type="radio" name="type" formControlName="type" value="fournisseur" id="option2">Fournisseur</label>
+                               </div>
+                            </div>
+                         </div>
+                         <div class="row">
+                            <div class="col-sm-12" style="    text-align: right;">
+                               <p> <button [disabled]="issent ||  RegisterForm.invalid" type="submit"  class="btn theme-btn">S'inscrire</button> </p>
+                            </div>
+                         </div>
+                      </form>
+                   </div>
+                   <!-- end: Widget -->
+                </div>
+                <!-- /REGISTER -->
+             </div>
+             <!-- WHY? -->
+             <div class="col-md-4">
+                <h4>L'inscription est rapide, facile et gratuite.</h4>
+                <p>Une fois inscrit, vous pouvez:</p>
+                <hr>
+                <img src="../../../assets/images/registeri.jpg" alt="" class="img-fluid">
+                <p></p>
+
+                <!-- end:panel -->
+                <!-- end:Panel -->
+                <h4 class="m-t-20"> Contactez l'assistance clientèle</h4>
+                <p>Si vous cherchez plus d'aide ou si vous avez une question à poser, veuillez </p>
+                <p> <a [routerLink]="['/contact']" routerLinkActive="router-link-active"  class="btn theme-btn m-t-15">contact us</a> </p>
+             </div>
+             <!-- /WHY? -->
+          </div>
+       </div>
+    </section>
+

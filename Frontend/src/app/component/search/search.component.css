@@ -1,0 +1,169 @@
+/* la zone de déplacement */
+input[type=range].custom-slider::-webkit-slider-runnable-track {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;  /* supprimé définie sur l'input */
+  }
+  /* le curseur */
+  input[type=range].custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;       /* également nécessaire sur le curseur */
+    width: 1em;
+    height: inherit;                /* s'adapte à la hauteur de l'input */
+    border: none;
+    border-radius: 0;               /* pris en compte sur Webkit et Edge */
+    background: currentColor;       /* pris en compte sur Webkit only */
+  }
+
+  input[type=range].custom-slider {
+    -webkit-appearance: none;     /*nécessaire pour Chrome */
+    padding: 0;                   /* nécessaire pour IE */
+    font: inherit;                /* même rendu suivant font document */
+    outline: none;
+    color: #f30;                  /* sert pour couleur de référence, via currentColor, pour le curseur */
+    opacity: .8;
+    background: #CCC;             /* sert pour couleur de fond de la zone de déplacement */
+    box-sizing: border-box;       /* même modèle de boîte pour tous */
+    transition: opacity .2s;
+    cursor: pointer;
+  }
+
+  * la zone de déplacement */
+input[type=range].custom-slider::-moz-range-track {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;  /* supprimé définie sur l'input */
+}
+/* le curseur */
+input[type=range].custom-slider::-moz-range-thumb {
+  width: 1em;
+  height: inherit;                /* s'adapte à la hauteur de l'input */
+  border: none;                   /* supprimer la bordure */
+  border-radius: 0;               /* supprimer le rayon */
+  background: currentColor;
+}
+/* barre progression avant */
+input[type=range].custom-slider::-moz-range-progress {
+  height: 0;
+  background: transparent;        /* supprime barre progression avant */
+}
+
+
+/* la zone de déplacement */
+input[type=range].custom-slider::-ms-track {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    color: transparent;             /* supprime les graduations pour IE */
+    background-color: transparent;  /* supprimé définie sur l'input */
+  }
+  /* le curseur */
+  input[type=range].custom-slider::-ms-thumb {
+    width: 1em;
+    height: inherit;                /* s'adapte à la hauteur de l'input */
+    border: none;                   /* supprimer la bordure */
+    border-radius: 0;               /* supprimer le rayon */
+    background: currentColor;
+  }
+  /* la tooltip de la valeur */
+  input[type=range].custom-slider::-ms-tooltip {
+    display: none;                  /* supprime l'affichage de la valeur au survol */
+  }
+  /* barre progression avant */
+  input[type=range].custom-slider::-ms-fill-lower {
+    background: transparent;
+  }
+  /* barre progression après */
+  input[type=range].custom-slider::-ms-fill-upper {
+    background: transparent;
+  }
+
+
+
+  .single-item-img img{
+    max-width: 150px;
+    height: 138px;
+    border-radius: 5px;
+    margin-right: 24px;
+  }
+
+
+  .comments {
+    margin: 2.5rem auto 0;
+    max-width: 60.75rem;
+    padding-left: 20px;
+  }
+  
+  .comment-wrap {
+    margin-bottom: 1.25rem;
+    display: table;
+    width: 100%;
+    min-height: 5.3125rem;
+  }
+  
+  .photo {
+    padding-top: 0.625rem;
+    display: table-cell;
+    width: 3.5rem;
+  }
+  .photo .avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-size: contain;
+  }
+  
+  .comment-block {
+    padding: 1rem;
+    background-color: #fff;
+    display: table-cell;
+    vertical-align: top;
+    border-radius: 0.1875rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+  }
+  .comment-block textarea {
+    width: 100%;
+    resize: none;
+  }
+  
+  .comment-text {
+    margin-bottom: 1.25rem;
+  }
+  
+  .bottom-comment {
+    color: #acb4c2;
+    font-size: 0.875rem;
+  }
+  
+  .comment-date {
+    float: left;
+  }
+  
+  .comment-actions {
+    float: right;
+  }
+  .comment-actions li {
+    display: inline;
+    margin: -2px;
+    cursor: pointer;
+  }
+  .comment-actions li.complain {
+    padding-right: 0.75rem;
+    border-right: 1px solid #e1e5eb;
+  }
+  .comment-actions li.reply {
+    padding-left: 0.75rem;
+    padding-right: 0.125rem;
+  }
+  .comment-actions li:hover {
+    color: #0095ff;
+  }
+  .comment-block .userName {
+    font-size: 21px;
+    font-weight: bold;
+    cursor: pointer;
+  } 
+   .comment-block .userName:hover {
+      color: #f30;
+  }

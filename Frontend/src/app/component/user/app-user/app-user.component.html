@@ -1,0 +1,47 @@
+
+
+<div class="main-section">
+    <div class="page-section restaurant-detail-image-section" style=" background: url(../../../../assets/images/extra-images/banner-img-2.jpg) no-repeat scroll 0 0 / cover;">
+        <!-- Container Start -->
+        <div style="margin:auto" class="container">
+            <!-- Row Start -->
+            <div class="row">
+                <!-- Column Start -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="company-info-detail">
+                        <div class="company-info">
+                            <div class="img-holder">
+                                <figure>
+                                    <img src="../../../../assets/images/extra-images/icon8.png" alt="">
+                                </figure>
+                            </div>
+                            <div  style="padding-left: 40px;" class="text-holder">
+                                <span class="restaurant-title">{{userDetails.nom}} {{userDetails.prenom}}</span>
+                                <ul class="user-info-contact">
+                                    <li  class="cell"><i class="fa fa-phone-square"></i><a href="tel:{{userDetails.telephone}}">{{userDetails.telephone}}</a></li>
+                                    <li   class="email"><i class="fa fa-envelope-o"></i><a href="mailto:{{userDetails.email}}">{{userDetails.email}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column End -->
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </div>
+    <div class="page-section account-header buyer-logged-in">
+        <div  style="margin:auto" class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <app-user-menu></app-user-menu>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                        <router-outlet ></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

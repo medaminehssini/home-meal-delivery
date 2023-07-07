@@ -1,0 +1,186 @@
+<div class="user-dashboard loader-holder">
+    <div class="user-holder">
+        <div class="user-profile">
+            <div class="element-title has-border">
+                <h5> PARAMÈTRES DU COMPTE </h5>
+            </div>
+            <div class="row">
+                <form *ngIf="user" [formGroup]="settingForm" id="publisher_profile" (ngSubmit) = "setDataUser()">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div style="  background-color: #c33332;
+                        padding: 10px;
+                        margin-bottom: 20px;
+                        color: white;" *ngIf="errors" class="alert alert-danger">
+                            <ul>
+                                <li *ngFor="let error of errors">{{error}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="field-holder">
+                                    <label>Nom *</label>
+                                    <input formControlName="nom"  type="text" class="foodbakery-dev-req-field" value="">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="field-holder">
+                                    <label>Prénom *</label>
+                                    <input formControlName="prenom"  type="text" class="foodbakery-dev-req-field" value="">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="field-holder">
+                                    <label>Email *</label>
+                                    <input formControlName="email"  type="text" class="foodbakery-dev-req-field" value="">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="field-holder">
+                                    <label>Telephone *</label>
+                                    <input formControlName="telephone"  type="text" class="foodbakery-dev-req-field" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <div class="user-profile-images">
+                            <div class="current-img">
+                                <div class="row mt">
+                                    <div id="cropContainerModal">
+                                        <figure>
+                                            <a><img id="Userphoto" *ngIf="!user.image" src="../../../../assets/images/extra-images/icon8.png" alt=""></a>
+                                            <a><img id="Userphoto" *ngIf="user.image" src="{{user.image}}" alt=""></a>
+                                        </figure>
+                                    </div>
+                                </div>
+                                <span>Upload a profile picture or choose one of the following</span>
+                            </div>
+                            <div class="upload-file">
+                                <input id="file-1" type="file" class="hide">
+                                <button type="button"><span>Upload Picture</span></button>
+                            </div>
+                            <ul class="uploaded-img">
+                                <li >
+                                    <figure>
+                                        <img (click)="setimage($event)" src="../../../../assets/images/extra-images/icon1.png" alt="">
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                        <img (click)="setimage($event)" src="../../../../assets/images/extra-images/icon8.png" alt="">
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                        <img (click)="setimage($event)" src="../../../../assets/images/extra-images/icon9.png" alt="">
+                                    </figure>
+                                </li>
+                               
+                                <li>
+                                    <figure>
+                                        <img (click)="setimage($event)" src="../../../../assets/images/extra-images/icon11.png" alt="">
+                                    </figure>
+                                </li>
+                               
+                                <li>
+                                    <figure>
+                                        <img (click)="setimage($event)" src="../../../../assets/images/extra-images/icon14.png" alt="">
+                                    </figure>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="opt-conts">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="field-holder">
+                                        <label>Adresse *</label>
+                                        <div class="select-holder">
+                                            <input formControlName="adresse"  type="text" class="foodbakery-dev-req-field" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="field-holder">
+                                        <label>Ville *</label>
+                                        <div class="select-holder">
+                                            <input formControlName="ville"  type="text" class="foodbakery-dev-req-field" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="field-holder">
+                                        <label>Code Postal *</label>
+                                        <div class="select-holder">
+                                            <input formControlName="codePostale"  type="text" class="foodbakery-dev-req-field" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="field-holder">
+                                        <label>Latitude</label>
+                                        <input type="text" placeholder="Latitude" class="form-control gllpLatitude" value="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="field-holder">
+                                        <label>Longitude</label>
+                                        <input type="text" placeholder="Longitude" class="form-control gllpLongitude" value="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="field-holder">
+                                        <label>Find On Map</label>
+                                        <input type="text" placeholder="Type Your Address" class="foodbakery-search-location">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="field-holder"></div>
+                                    <div class="field-holder search-location-map input-button-loader">
+                                        <input type="button" class="acc-submit cs-section-update cs-color gllpSearchButton" value="Search Location">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="cs-map-section">
+                                        <img style="width:100%;height: 100%;" src="../../../../assets/images/extra-images/map-location.png" alt="">
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="element-title has-border">
+                            <h5>CHANGER LE MOT DE PASSE                            </h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="field-holder">
+                            <label> Mot de passe actuel*</label>
+                            <input formControlName="oldpassword" type="password" >
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="field-holder">
+                            <label> Nouveau mot de passe*</label>
+                            <input formControlName="password" type="password">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="field-holder">
+                            <label> Confirmer le nouveau mot de passe* </label>
+                            <input formControlName="password_confirmation" type="password">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="field-holder">
+                            <button name="button"  type="submit" class="btn-submit">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

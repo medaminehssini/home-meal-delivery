@@ -1,0 +1,265 @@
+<!-- banner part starts -->
+<section class="hero bg-image" data-image-src="../../../assets/images/image01.jpg">
+    <div class="hero-inner">
+        <div class="container text-center hero-text font-white">
+            <h1>Livraison rapide des repas </h1>
+            <h5 class="font-white space-xs">Trouvez des restaurants et des offres spéciales</h5>
+            <div class="banner-form">
+                <form class="form-inline">
+                    <div style="position: relative; " class="form-group">
+                        <label class="sr-only" for="searchContent">Je voudrais manger....</label>
+                        <div class="form-group">
+                            <input #searchS autocomplete="off" (keyup)="getSpecialite($event.srcElement.value)"
+                                type="text" class="form-control form-control-lg" id="searchContent" value=""
+                                placeholder="Je voudrais manger...."> </div>
+                        <div *ngIf="isOpenSearch && specialiteResult"
+                            style="position: absolute;  width: 100%;z-index: 20;" class="sidebar clearfix m-b-20">
+                            <div class="main-block">
+                                <ul style=" text-align: left;">
+                                    <li *ngFor="let item of specialiteResult|slice:0:5;">
+                                        <label class="custom-control custom-checkbox">
+                                            <span (click)="selectSearch($event,item.id)"
+                                                class="custom-control-description">{{item.libelle}}</span> </label>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <!-- end:Sidebar nav -->
+                        </div>
+                    </div>
+                    <button (click)="gotoSearch(searchS.value)" class="btn theme-btn btn-lg">Rechercher un
+                        repas</button>
+                </form>
+            </div>
+            <div class="steps">
+                <div class="step-item step1">
+                    <img src="../../../assets/images/1.png" alt="">
+                    <h4><span>1. </span>Choisissez le resto</h4>
+                </div>
+                <!-- end:Step -->
+                <div class="step-item step2">
+                    <img src="../../../assets/images/2.png" alt="">
+                    <h4><span>2. </span>Commander</h4>
+                </div>
+                <!-- end:Step -->
+                <div class="step-item step3">
+                    <img src="../../../assets/images/3.png" alt="">
+                    <h4><span>3. </span>Livraison de commande</h4>
+                </div>
+                <!-- end:Step -->
+            </div>
+            <!-- end:Steps -->
+        </div>
+    </div>
+    <!--end:Hero inner -->
+</section>
+<!-- banner part ends -->
+<!-- location match part starts -->
+<div *ngIf="getDataWithCity() && restaurants" class="location-match text-xs-center">
+    <div class="container"> <span>{{meta.total}} restaurants appariés à vos locations : <span class="primary-color">{{city}}
+                </span> </span>
+    </div>
+</div>
+<!-- location match part ends -->
+<!-- Popular block starts -->
+<section class="popular">
+
+    <div class="container">
+        <div class="title text-xs-center m-b-30">
+            <h2>Populaire ce mois-ci dans votre ville </h2>
+            <p class="lead">Le moyen le plus facile de votre repas préféré </p>
+        </div>
+        <div *ngIf="!Repas" class="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+
+            <!-- Each popular food item starts -->
+       
+
+
+        <div *ngIf="Repas" class="row">
+ 
+            <div class="container-fluid">
+                <owl-carousel-o [options]="customOptions">
+ 
+                    <ng-container *ngFor="let item of Repas">
+                      <ng-template *ngIf="verifCity(city , item.restaurant.ville)" carouselSlide  [id]="item.id">
+                        <div style="margin:0 20px;" class="food-item-wrap">
+                            <div class="figure-wrap " style="background: center center / cover no-repeat;"
+                                [ngStyle]="{'background-image': global.verifLogoBack(item.image , item.libelle)}">
+                                <div class="rating pull-left" [innerHTML]="global.rateCode(item.rate)">
+                                </div>
+                                <div class="review pull-right"><a>{{ item.nbrCommntaire }} Notes</a> </div>
+                            </div>
+                            <div class="content">
+                                <h5><a style="cursor: pointer;"
+                                       >{{ item.libelle }}</a></h5>
+                                <div class="product-name" style="min-height: 24px;">{{ item.description }}</div>
+                                <div class="price-btn-block">
+                                    <span class="price">{{ item.prix }} TND</span>
+                                    <button *ngIf="item.type=='repas'" (click)="cart.addToCart(item);"
+                                        class="btn theme-btn-dash pull-right"> Commander </button>
+
+                                </div>
+                            </div>
+                            <div style="height: 70px;" class="restaurant-block">
+                                <div class="left">
+                                    <a class="pull-left" href="#"> <img style="width: 50px;"
+                                            src="{{global.verifLogo(item.restaurant.logo,item.restaurant.nom)}}"
+                                            alt="Restaurant logo"> </a>
+                                    <div class="pull-left right-text"> <a
+                                            [routerLink]="['/restaurant/' + item.restaurant.id]">{{item.restaurant.nom}}</a>
+                                        <span>{{item.restaurant.adresse}}</span> </div>
+                                </div>
+                            </div>
+                        </div>
+                      </ng-template>
+                    </ng-container>
+                 
+                  </owl-carousel-o>
+        </div>
+    </div>
+    </div>
+</section>
+<!-- Popular block ends -->
+<!-- How it works block starts -->
+<section class="how-it-works">
+    <div class="container">
+        <div class="text-xs-center">
+            <h2>Commande facile en 3 étapes </h2>
+            <!-- 3 block sections starts -->
+            <div class="row how-it-works-solution">
+                <div class="col-xs-12 col-sm-12 col-md-4 how-it-works-steps white-txt col1">
+                    <div class="how-it-works-wrap">
+                        <div class="step step-1">
+                            <div class="icon" data-step="1">
+                                <img src="../../../assets/images/1.png" alt="">
+
+                            </div>
+                            <h3>Choisissez un restaurant </h3>
+                            <p>Nous vous proposons des menus de plus de 345 restaurants en ligne.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 how-it-works-steps white-txt col2">
+                    <div class="step step-2">
+                        <div class="icon" data-step="2">
+                            <img src="../../../assets/images/2.png" alt="">
+
+                        </div>
+                        <h3>Choisissez un repas délicieux </h3>
+                        <p>Nous vous proposons des menus de plus de 345 restaurants en ligne.</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 how-it-works-steps white-txt col3">
+                    <div class="step step-3">
+                        <div class="icon" data-step="3">
+                            <img src="../../../assets/images/3.png" alt="">
+
+                        </div>
+                        <h3>Ramassage ou livraison</h3>
+                        <p>Obtenez votre nourriture livrée! Et profitez de votre repas! Payez en ligne au ramassage ou à
+                            la livraison.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 3 block sections ends -->
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <p class="pay-info">Payement lors de livraison ou carte de crédit </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- How it works block ends -->
+<!-- Featured restaurants starts -->
+<section class="featured-restaurants">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="title-block pull-left">
+                    <h4>Nos Restaurants</h4>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <!-- restaurants filter nav starts -->
+                <!-- <div class="restaurants-filter pull-right">
+                    <nav id="filtreRestaurant" class="primary pull-left">
+                        <ul *ngIf="specialiteList">
+                            <li><a class="selected" data-filter="*">Tout</a> </li>
+                            <li><a  data-filter=".Sandwich">Sandwich</a> </li>
+
+                            <li *ngFor="let item of specialiteList"><a  attr.data-filter=".{{item.libelle}}">{{item.libelle}}</a> </li>
+                        </ul>
+                    </nav>
+                </div> -->
+                <!-- restaurants filter nav ends -->
+            </div>
+        </div>
+        <!-- restaurants listing starts -->
+
+        <div class="row">
+            <div *ngIf="!restaurants" class="lds-facebook">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="restaurant-listing">
+                <div *ngIf="restaurants">
+                    <div *ngFor="let restaurant of restaurants"
+                        class="col-xs-12 col-sm-12 col-md-6 single-restaurant grill  {{getClass(restaurant.specialite)}}">
+                        <div class="restaurant-wrap">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-3 col-md-12 col-lg-3 text-xs-center">
+                                    <a class="restaurant-logo" href="#"> <img
+                                            src="{{verifLogo(restaurant.logo,restaurant.nom)}}" alt="Restaurant logo">
+                                    </a>
+                                </div>
+                                <!--end:col -->
+                                <div class="col-xs-12 col-sm-9 col-md-12 col-lg-9">
+                                    <h5><a [routerLink]="['/restaurant', restaurant.id]">{{restaurant.nom}}</a></h5>
+                                    <span>{{restaurant.adresse}}</span>
+                                    <div class="bottom-part">
+                                        <div class="cost"><i class="fa fa-check"></i> Min {{restaurant.minPrix}} TND
+                                        </div>
+                                        <div class="mins"><i class="fa fa-motorcycle"></i> 30 min</div>
+                                        <div class="ratings"> <span [innerHTML]="rateCode(restaurant.rate)">
+
+                                            </span> ({{restaurant.commentaire}}) </div>
+                                    </div>
+                                </div>
+                                <!-- end:col -->
+                            </div>
+                            <!-- end:row -->
+                        </div>
+                        <!--end:Restaurant wrap -->
+                    </div>
+                    <!--end: col -->
+                </div>
+            </div>
+        </div>
+        <!-- restaurants listing ends -->
+        <!-- add restaurant starts -->
+        <section class="add-restaurants">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-3 add-title">
+                        <h4>Ajoutez votre restaurant</h4>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 join-text">
+                        <p>
+                            Rejoignez les milliers d'autres restaurants qui bénéficient d'avoir leurs menus sur
+                            <a ><strong> l'annuaire KGS EXPRESS</strong></a> </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 join-btn text-xs-right"><a [routerLink]="['/register']"   class="btn theme-btn btn-lg">Je suis un restaurant                    </a> </div>
+                </div>
+            </div>
+        </section>
+        <!-- add restaurant ends -->
+    </div>
+</section>
+<!-- Featured restaurants ends -->

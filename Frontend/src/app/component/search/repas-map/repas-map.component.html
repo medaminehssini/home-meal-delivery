@@ -1,0 +1,238 @@
+ <!-- PAGE CONTETNT -->
+ <section class="gl-page-content-section" >
+    <div class="container-fluid">
+        <div class="row" >
+            <!-- SEARCH MAP -->
+            <div style="z-index: 0;" class="map-wrapper map-split"  >
+                <div id="map"></div>
+            </div>
+            <!-- SEARCH MAP END -->
+            <!-- SEARCH -->
+            <div id="map-result-section" class="map-result-wrapper">
+                <div class="widget clearfix">
+                    <!-- /widget heading -->
+                    <div class="widget-heading">
+                        <h3 class="widget-title text-dark">
+                            Filtre de recherche
+                        </h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="widget-body">
+                        <form class="row">
+                            <div class="col-xs-12 col-md-6 col-lg-7">
+                                <div class="form-group">
+                                    <input type="text" class="form-control"  #SearchBox id="SearchBox" (keyup)="getSpecialite(SearchBox.value)" placeholder="Mot-clé"> </div>
+                            </div>
+
+                            <div class="col-xs-12 col-md-6 col-lg-5">
+                                <div class="form-group">
+                                    <select class="form-control" change id="exampleSelect1" (change)="specialiteSearch($event.srcElement.value)">
+                                        
+                                        <option value="">Spécialité</option>
+                                        <option *ngFor="let item of listSpecialite|slice:0:5;"  value="{{item.id}}">{{item.libelle}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- end:Pricing widget -->
+
+                <div class="search-result-wrapper">
+                    <div *ngIf="loading" style="    position: fixed;
+                        z-index: 10;
+                        width: 100%;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                        background-color: #00000045;">       
+                        <div style="top:50%" class="lds-facebook"><div></div><div></div><div></div></div>
+                    </div>
+                    <div *ngIf="result" class="row">
+                                  <!-- Each popular food item starts -->
+                    <div *ngFor="let item of result.data" class="col-xs-12 col-sm-6 col-md-6 food-item">
+                        <div class="food-item-wrap">
+                            <div class="figure-wrap " style="background: center center / cover no-repeat;"
+                                [ngStyle]="{'background-image': verifLogo(item.image , item.libelle)}">
+                            
+                                <div class="rating pull-left" [innerHTML]="global.rateCode(item.rate)">
+                                </div>
+                                <div class="review pull-right"><a>{{ item.nbrCommntaire }} Notes</a> </div>
+                            </div>
+                            <div class="content">
+                                <h5><a style="cursor: pointer;" data-toggle="modal" data-target="#product_view"
+                                        (click)="setRepasdetails(item)">{{ item.libelle }}</a></h5>
+                                <div class="product-name" style="min-height: 24px;">{{ item.description }}</div>
+                                <div class="price-btn-block">
+                                    <span class="price">{{ item.prix }} TND</span>
+                                    <button *ngIf="item.type=='repas'" (click)="cart.addToCart(item);"
+                                        class="btn theme-btn-dash pull-right"> Commander </button>
+                                    <div *ngIf="item.type=='pack'" (click)="packlistitem=item" style="display: inline;">
+                                        <button class="btn theme-btn-dash pull-right" data-toggle="modal"
+                                            data-target="#order-modal"> Voir le Menu </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div style="height: 70px;" class="restaurant-block">
+                                <div class="left">
+                                    <a class="pull-left" href="#"> <img style="width: 50px;"
+                                            src="{{global.verifLogo(item.restaurant.logo,item.restaurant.nom)}}"
+                                            alt="Restaurant logo"> </a>
+                                    <div class="pull-left right-text"> <a
+                                            [routerLink]="['/restaurant/' + item.restaurant.id]">{{item.restaurant.nom}}</a>
+                                        <span>{{item.restaurant.adresse}}</span> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Each popular food item starts -->
+                    <div *ngIf="result" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <nav aria-label="">
+                            <ul *ngIf="result.meta.last_page >1" class="pagination">
+                                <li (click)="result.meta.current_page >1 ? setPage('?page=' + (result.meta.current_page-1)):''"
+                                    [ngClass]="{'disabled':result.meta.current_page === 1 }" class="page-item">
+                                    <a class="page-link" tabindex="-1" aria-label="Previous"> <span
+                                            aria-hidden="true">«</span> <span class="sr-only">Previous</span> </a>
+                                </li>
+                                <li *ngFor="let paginat of paginate(result.meta); let i=index"
+                                    [ngClass]="{'active':paginat.currentPage }" class="page-item "> <a class="page-link"
+                                        (click)="setPage(paginat.pageUrl)">{{paginat.numPage}} </a> </li>
+
+                                <li (click)="result.meta.current_page !== result.meta.last_page ? setPage('?page=' + (result.meta.current_page+1)):''"
+                                    [ngClass]="{'disabled':result.meta.current_page === result.meta.last_page }"
+                                    class="page-item">
+                                    <a class="page-link" aria-label="Next"> <span aria-hidden="true">»</span>
+                                        <span class="sr-only">Next</span> </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SEARCH END-->
+        </div>
+    </div>
+</section>
+<!-- PAGE CONTETNT END -->
+
+<!-- Modal -->
+<div class="modal fade" id="order-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span
+                    aria-hidden="true">&times;</span> </button>
+            <div *ngIf="packlistitem" class="modal-body cart-addon" style="padding: 26px;">
+                <div *ngFor="let item of packlistitem.repas" class="food-item">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-9 col-lg-9">
+                            <div class="item-img pull-left">
+                                <a class="restaurant-logo pull-left"><img
+                                        src="{{global.verifLogo(item.image,item.libelle)}}" alt="{{item.libelle}}"></a>
+                            </div>
+                            <!-- end:Logo -->
+                            <div class="rest-descr">
+                                <h6><a >{{item.libelle}}</a></h6>
+                            </div>
+                            <!-- end:Description -->
+                        </div>
+                        <!-- end:col -->
+                        <div class="col-xs-12 col-sm-3 col-lg-3 text-xs-center"> <span
+                                class="price pull-left">{{item.prix}} TND</span></div>
+                    </div>
+                    <!-- end:row -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" style="margin-left: 5px;" (click)="cart.addToCart(packlistitem);"
+                    class="btn theme-btn">Commander</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="product_view" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span
+                    aria-hidden="true">&times;</span> </button>
+            <div class="modal-body cart-addon" style="padding: 26px;">
+                <div class="food-item">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-lg-12">
+                            <div class="single-item-img pull-left">
+                                <a class="restaurant-logo pull-left" href="#"><img
+                                        src="{{global.verifLogo(repasdetails?.image,repasdetails?.libelle)}}"
+                                        alt=""></a>
+                            </div>
+                            <!-- end:Logo -->
+                            <div class="rest-descr">
+                                <div class="col-xs-12 col-sm-7 col-lg-7">
+                                    <h6>
+                                        <a style="font-weight: bold;
+                                        font-size: 20px;">{{repasdetails?.libelle}} </a>
+                                    </h6>
+                                </div>
+                                <div style="    color: #ff3300;
+                                float: right;
+                                margin-right: 16px;" [innerHTML]="global.rateCode(repasdetails?.rate)">
+                                </div>
+                            </div>
+
+                            <!-- end:Description -->
+                            <div class="col-xs-12 col-sm-8 col-lg-8">
+                                <p>
+                                    {{repasdetails?.description}}
+                                </p>
+                                <span class="price pull-left">{{repasdetails?.prix}} TND</span>
+                            </div>
+                        </div>
+                        <!-- end:col -->
+                    </div>
+                    <!-- end:row -->
+                </div>
+                <div>
+                    <h4>
+                        Liste des commentaire ({{repasdetails?.nbrCommntaire}}):
+                    </h4>
+                </div>
+                <div class="comments">
+                    <div *ngFor="let commntaire of repasdetails?.commntaire" class="comment-wrap">
+                        <div class="photo">
+                            <img  class="avatar" src="{{global.logoUser(commntaire.image)}}" alt="">
+                        </div>
+                        <div class="comment-block">
+                            <div class="col-md-12" style="padding: 0;">
+                                <div class="col-md-9" style="padding: 0;">
+                                    <h2 class="userName">{{commntaire?.nom}}</h2>
+                                </div>
+                                <div class="col-md-3" style="color:#ff3300;"
+                                    [innerHTML]="global.rateCode(commntaire.taux)">
+
+                                </div>
+                            </div>
+                            <p class="comment-text">
+                                {{commntaire.description}}
+                            </p>
+                            <div class="bottom-comment">
+                                <div class="comment-date">{{commntaire.created_at}}</div>
+                                <ul class="comment-actions">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" style="margin-left: 5px;" (click)="cart.addToCart(repasdetails);"
+                    class="btn theme-btn">Commander</button>
+            </div>
+        </div>
+    </div>
+</div>

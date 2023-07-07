@@ -1,0 +1,176 @@
+.img-rounded{
+    height: 45px;
+}
+#mainNavbarCollapse {
+    margin-top: 9px;
+}
+.lds-facebook {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    height: 80px;
+  }
+  .lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    background: #f30;
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  }
+  .lds-facebook div:nth-child(1) {
+    left: 8px;
+    animation-delay: -0.24s;
+  }
+  .lds-facebook div:nth-child(2) {
+    left: 32px;
+    animation-delay: -0.12s;
+  }
+  .lds-facebook div:nth-child(3) {
+    left: 56px;
+    animation-delay: 0;
+  }
+  @keyframes lds-facebook {
+    0% {
+      top: 8px;
+      height: 64px;
+    }
+    50%, 100% {
+      top: 24px;
+      height: 32px;
+    }
+  }
+  
+
+#cart{
+    cursor: pointer; 
+    user-select:none;
+    margin-top: 20px;
+}
+.container-cart {
+	position: relative;
+    overflow: hidden;
+    margin: auto;
+    width: 66%;
+}
+.container-cart img {
+    width: 70px;
+    height: 70px;
+}
+.fadein, .fadeout {
+    opacity: 0;
+    -moz-transition: opacity 0.4s ease-in-out;
+    -o-transition: opacity 0.4s ease-in-out;
+    -webkit-transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+}
+.fadein {
+    opacity: 1;
+}
+.fadeout {
+    z-index: -1;
+}
+
+.cart-navbar {
+    margin-top: 9px;
+    color: #888b91;
+}
+
+ .lighter-text {
+	 color: #abb0be;
+}
+ .main-color-text {
+	 color: #f30;
+}
+
+ .badge {
+	 background-color: #f30;;
+	 border-radius: 10px;
+	 color: white;
+	 display: inline-block;
+	 font-size: 12px;
+	 line-height: 1;
+	 padding: 3px 7px;
+	 text-align: center;
+	 vertical-align: middle;
+	 white-space: nowrap;
+}
+ .shopping-cart {
+	 margin: 20px 0;
+	 float: right;
+	 background: white;
+	 width: 320px;
+	 position: relative;
+	 border-radius: 3px;
+	 padding: 20px;
+}
+ .shopping-cart .shopping-cart-header {
+	 border-bottom: 1px solid #e8e8e8;
+	 padding-bottom: 15px;
+}
+ .shopping-cart .shopping-cart-header .shopping-cart-total {
+	 float: right;
+}
+ .shopping-cart .shopping-cart-items {
+	 padding-top: 20px;
+}
+ .shopping-cart .shopping-cart-items li {
+	 margin-bottom: 18px;
+}
+ .shopping-cart .shopping-cart-items img {
+	 float: left;
+	 margin-right: 12px;
+}
+ .shopping-cart .shopping-cart-items .item-name {
+	 display: block;
+	 padding-top: 10px;
+	 font-size: 16px;
+}
+ .shopping-cart .shopping-cart-items .item-price {
+	 color: #f30;
+	 margin-right: 8px;
+}
+ .shopping-cart .shopping-cart-items .item-quantity {
+	 color: #abb0be;
+}
+ .shopping-cart:after {
+	 bottom: 100%;
+	 left: 89%;
+	 border: solid transparent;
+	 content: " ";
+	 height: 0;
+	 width: 0;
+	 position: absolute;
+	 pointer-events: none;
+	 border-bottom-color: white;
+	 border-width: 8px;
+	 margin-left: -8px;
+}
+ .cart-icon {
+	 color: #888b91;
+	 font-size: 24px;
+	 margin-right: 7px;
+	 float: left;
+}
+.shopping-cart .button {
+	 background: #f30;
+	 color: white;
+	 text-align: center;
+	 padding: 12px;
+	 text-decoration: none;
+	 display: block;
+	 border-radius: 3px;
+	 font-size: 16px;
+	 margin: 25px 0 15px 0;
+}
+.shopping-cart .button:hover {
+	 background: #729ef9;
+}
+.shopping-cart .clearfix:after {
+	 content: "";
+	 display: table;
+	 clear: both;
+}
+ 

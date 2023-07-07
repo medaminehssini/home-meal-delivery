@@ -1,0 +1,143 @@
+<!-- top Links -->
+<div class="top-links" style="    margin-top: 15px;"  >
+    <div class="container">
+        <ul class="row links">
+            <li class="col-xs-12 col-sm-3 link-item  active "><span>1</span><a [routerLink]="['/search/restaurant']" >
+                Choisissez un restaurant</a></li>
+            <li class="col-xs-12 col-sm-3 link-item  "><span>2</span><a [routerLink]="['/search/repas']">
+                Choisissez votre repas  préférée</a></li>
+            <li class="col-xs-12 col-sm-3 link-item "><span>3</span><a [routerLink]="['/checkout']">Choisissez votre emplacement</a>
+            </li>
+            <li class="col-xs-12 col-sm-3 link-item "><span>4</span><a [routerLink]="['/checkout']">Commandez en ligne </a></li>
+        </ul>
+    </div>
+</div>
+<!-- end:Top links -->
+<!-- start: Inner page hero -->
+<div class="inner-page-hero" style="background: url('../../../../assets/images/rest.jpg') center center / cover no-repeat; height: 400px;"  >
+    <div class="container"> </div>
+    <!-- end:Container -->
+</div>
+
+<div class="result-show">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <p *ngIf="restaurants"><span class="primary-color" ><strong >{{restaurants.meta.total}}</strong></span> Resultats
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- //results show -->
+<div *ngIf="loading" style="    position: fixed;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: #00000045;">       
+        <div style="top:50%" class="lds-facebook"><div></div><div></div><div></div></div>
+</div>
+<section class="restaurants-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-3">
+                <div class="sidebar clearfix m-b-20">
+                    <div class="main-block">
+                        <div class="sidebar-title white-txt">
+                            <h6>Choisir la cuisine</h6> <i class="fa fa-cutlery pull-right"></i>
+                        </div>
+                        <div class="input-group">
+                            <input (keyup)="setNom($event.srcElement.value)" id="SearchBox" type="text" class="form-control search-field"
+                                placeholder="Choisir votre restaurant préféré"> <span class="input-group-btn">
+                                <button (click)="getRestaurants()" class="btn btn-secondary search-btn" type="button"><i
+                                        class="fa fa-search"></i></button>
+                            </span> </div>
+                        <form>
+                            <ul *ngIf="specialites">
+                                <li *ngFor="let item of specialites|slice:0:7;">
+                                    <label class="custom-control custom-checkbox">
+                                        <input (click)="specialiteSearch($event.srcElement.value,$event.srcElement.checked)" value="{{item.id}}" type="checkbox" class="custom-control-input"> <span
+                                            class="custom-control-indicator"></span> <span
+                                            class="custom-control-description">{{item.libelle}}</span> </label>
+                                </li>
+                            </ul>
+                        </form>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- end:Sidebar nav -->
+                </div>
+                <!-- end:Pricing widget -->
+                <div class="widget clearfix">
+                    <!-- /widget heading -->
+                    <div class="widget-heading">
+                        <h3 class="widget-title text-dark">
+                            Popular tags
+                        </h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="widget-body" *ngIf="tags">
+                        <ul class="tags">
+                            <li *ngFor="let tag of tags" > <a (click)="setTags(tag.mot)" class="tag">
+                                    {{tag.mot}}
+                                </a>
+                             </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- end:Widget -->
+            </div>
+            <div *ngIf="restaurants" class="col-xs-12 col-sm-7 col-md-7 col-lg-9">
+                <div *ngFor="let restaurant of restaurants.data" class="bg-gray restaurant-entry">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-8 text-xs-center text-sm-left">
+                            <div class="entry-logo">
+                                <a class="img-fluid" [routerLink]="['/restaurant/' + restaurant.id ]" ><img width="108px" height="108px" src="{{ restaurantSearch.global.verifLogo(restaurant.logo , restaurant.nom ) }}"
+                                        alt="Food logo"></a>
+                            </div>
+                            <!-- end:Logo -->
+                            <div class="entry-dscr">
+                                <h5><a [routerLink]="['/restaurant/' + restaurant.id ]" >{{restaurant.nom}}</a></h5> 
+                                <span [innerHTML]="setSpecialite(restaurant.specialite)"></span>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><i class="fa fa-check"></i> Min {{ restaurant.minPrix }} TND</li>
+                                   
+                                </ul>
+                            </div>
+                            <!-- end:Entry description -->
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4 text-xs-center">
+                            <div class="right-content bg-white">
+                                <div class="right-review">
+                                    <div class="rating-block" [innerHTML] = "restaurantSearch.global.rateCode(restaurant.rate )"> </div>
+                                    <p> {{restaurant.commentaire}} évaluations</p> <a [routerLink]="['/restaurant/' + restaurant.id ]" class="btn theme-btn-dash">Voir le Menu</a>
+                                </div>
+                            </div>
+                            <!-- end:right info -->
+                        </div>
+                    </div>
+                    <!--end:row -->
+                </div>
+                <div *ngIf="restaurants" class="col-xs-12">
+                    <nav >
+                        <ul *ngIf="restaurants.meta.last_page >1" class="pagination">
+                            <li (click)="restaurants.meta.current_page >1 ? setPage('?page=' + (restaurants.meta.current_page-1)):''" [ngClass]="{'disabled':restaurants.meta.current_page === 1 }" class="page-item">
+                                <a class="page-link" tabindex="-1" aria-label="Previous"> <span
+                                        aria-hidden="true">«</span> <span class="sr-only">Previous</span> </a>
+                            </li>
+                            <li *ngFor="let paginat of paginate(restaurants.meta); let i=index" [ngClass]="{'active':paginat.currentPage }" class="page-item "> <a class="page-link"(click)="setPage(paginat.pageUrl)">{{paginat.numPage}} </a> </li>
+    
+                            <li (click)="restaurants.meta.current_page !== restaurants.meta.last_page ? setPage('?page=' + (restaurants.meta.current_page+1)):''" [ngClass]="{'disabled':restaurants.meta.current_page === restaurants.meta.last_page }" class="page-item">
+                                <a class="page-link"  aria-label="Next"> <span aria-hidden="true">»</span>
+                                    <span class="sr-only">Next</span> </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,32 @@
+.ng-invalid.ng-touched {
+    color: #55595c;
+    background-color: #fff;
+    border-color: red;
+    outline: 0;
+}
+.ng-valid.ng-touched {
+    color: #55595c;
+    background-color: #fff;
+    border-color: green;
+    outline: 0;
+}
+.form-control{
+    padding-left:25px ;
+}
+
+.pos{
+    position: absolute;
+    top: 11px;
+    left: 21px;
+    color: green;
+}
+
+.ensent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #0f0f0e30;
+    z-index: 2;
+    left: 0px;
+    top: 0
+}

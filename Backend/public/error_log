@@ -1,0 +1,1 @@
+[12-Apr-2020 16:31:08 UTC] PHP Fatal error:  Access level to App\OptionAbonnement::$timestamps must be public (as in class Illuminate\Database\Eloquent\Model) in /home/kgsexpress/public_html/app/OptionAbonnement.php on line 0

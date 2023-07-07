@@ -1,0 +1,281 @@
+<div class="user-dashboard loader-holder">
+    <div class="user-holder">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="element-title has-border right-filters-row">
+                    <h5>Mes Commandes</h5>
+                    <div class="right-filters row pull-right">
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <div class="input-field">
+                                <select (change)="setEtatCommande(t.value)" #t class="chosen-select-single">
+                                    <option  selected="selected" value="">Sélectionnez le statut des commandes</option>
+                                    <option  value="3">livré</option>
+                                    <option value="1">accepté</option>
+                                    <option value="0">attendre</option>
+                                    <option value="2">En cour de laivraison</option>
+                                    <option value="4">Refusé</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <div class="input-field">
+                                <i class=" fa fa-angle-down"></i>
+                                <input type="text" ngxDaterangepickerMd startKey="start" id="daterange" endKey="end"  [(ngModel)]="selected" placeholder="Select Date Range">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="user-orders-list">
+                    <div class="row">
+                        <div *ngFor="let commande of listeCommande" class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="order-list">
+                                <div class="author-info">
+                                    <div style="width: 100%;" class="text-holder">
+                                        <h6  *ngIf="!commande.arrivee" ><a >{{ userDetails.adresse }}</a></h6>
+                                        <h6  *ngIf="commande.arrivee" ><a >{{ commande.arrivee }}</a></h6>
+                                        <address>LIVRER EN {{ commande.temps }} </address>
+                                        <span class="price">{{ commande.prix  }} TND</span>
+                                    </div>
+                                </div>
+                                <div class="rating-holder">
+                                    <span class="date-time">{{ commande.created_at.substring(1, 10) }} {{commande.created_at.substring(11, 19)}} </span>
+
+                                    <span class="date-time" style="    float: right;" *ngIf="commande.status == 'Livré'">(      <a style="cursor: pointer;" (click)="getVeview(commande)" data-toggle="modal" data-target="#order-review-22589" style="color:#ffbc00">donner un avis </a>
+                                        )</span>
+                                </div>
+                                <div class="order-btn">
+                                    <a href="#" data-toggle="modal" (click)="setOrderDetails(commande)" data-target="#order_detail">détail</a>
+
+                                    <span *ngIf="commande.status == 'En cour'" class="order-status" style="background-color: #ffbc00;">En cours</span>
+                                    <span *ngIf="commande.status == 'Livré'" class="order-status" style="background-color: #047a06;">Livré</span>
+                                    <span *ngIf="commande.status == 'Accepté'" class="order-status" style="background-color: #047a06;">Accepté</span>
+                                    <span *ngIf="commande.status == 'En cour de laivraison'" class="order-status" style="background-color: #ffbc00;">En cour de laivraison</span>
+                                    <span *ngIf="commande.status == 'Refusé'" class="order-status" style="background-color: #13068b;">Refusé</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul *ngIf="meta &&meta.last_page >1" class="pagination">
+
+
+            <li style="cursor: pointer;" *ngFor="let paginat of global.paginate(meta); let i=index" [ngClass]="{'active':paginat.currentPage }"  (click)="setPage(paginat.pageUrl)" ><a>{{paginat.numPage}}</a></li>
+            <li style="cursor: pointer;" (click)="meta.current_page !== meta.last_page ? setPage('?page=' + (meta.current_page+1)):''"
+            [ngClass]="{'disabled':meta.current_page === meta.last_page }"  >
+               <a >Next </a>
+            </li>
+
+        </ul>
+    </div>
+
+
+    <!-- commande rate     -->
+
+    <div class="modal fade menu-order-detail order-review" id="order-review-22589" tabindex="-1" role="dialog" style="display: none;">
+        <div style="left: 50%; top: 50%; transform: translate(-50%,-50%);" class="modal-dialog" role="document">
+            <div class="modal-content" id="reviwelist"  style="height: 100%;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h2><a>Évaluation de la commande</a></h2>
+                </div>
+                <div class="modal-body">
+                    <div class="order-detail-inner">
+                        <div class="reviews-holder">
+                            <div class="add-new-review-holder add-new-review-2067">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <h3>Donnez votre avis </h3>
+                                    </div>
+                                    <div  *ngIf="!repasCommande || !getListReview">
+                                        <div style="top:50%" class="lds-facebook"><div></div><div></div><div></div></div>
+                                    </div>
+                                    <div class="foodbakery-add-review-data" *ngIf="repasCommande && getListReview">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="rating-restaurant">
+                                                <ul class="star-rating-list">
+                                                    <li *ngFor="let item of repasCommande.repas" style="    overflow: hidden;">
+                                                       <div class="col-md-8">
+                                                         <span style="float: left;">{{item.libelle}} :</span>
+                                                       </div>
+                                                        <div class="col-md-4">
+                                                            <div style="width: 35%;float: left; font-size: 24px;" class="star-rating" >
+                                                                <input [checked]="verifReview(item.id , 5)" class="star-rating__input" id="{{item.id}}1" name="{{item.id}}" type="radio" />
+                                                                <label class="star-rating__label" (click)="setReview(item.id,5)" for="{{item.id}}1"><i class="material-icons">✰</i></label>
+                                                                <input [checked]="verifReview(item.id , 4)"  class="star-rating__input" id="{{item.id}}2" name="{{item.id}}" type="radio" />
+                                                                <label class="star-rating__label" (click)="setReview(item.id,4)" for="{{item.id}}2"><i class="material-icons">✰</i></label>
+                                                                <input [checked]="verifReview(item.id , 3)" class="star-rating__input" id="{{item.id}}3" name="{{item.id}}" type="radio" />
+                                                                <label class="star-rating__label" (click)="setReview(item.id,3)" for="{{item.id}}3"><i class="material-icons">✰</i></label>
+                                                                <input [checked]="verifReview(item.id , 2)" class="star-rating__input" id="{{item.id}}4" name="{{item.id}}" type="radio" />
+                                                                <label class="star-rating__label"  (click)="setReview(item.id,2)" for="{{item.id}}4"><i class="material-icons">✰</i></label>
+                                                                <input [checked]="verifReview(item.id , 1)" class="star-rating__input" id="{{item.id}}5" name="{{item.id}}" type="radio" />
+                                                                <label class="star-rating__label"  (click)="setReview(item.id,1)" for="{{item.id}}5"><i class="material-icons">✰</i></label>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li *ngFor="let item of repasCommande.pack" style="    overflow: hidden;">
+                                                        <div class="col-md-8">
+                                                          <span style="float: left;">{{item.libelle}} :</span>
+                                                        </div>
+                                                         <div class="col-md-4">
+                                                             <div style="width: 35%;float: left; font-size: 24px;" class="star-rating" >
+                                                                 <input [checked]="verifReview(item.id , 5)" class="star-rating__input" id="{{item.id}}1" name="{{item.id}}" type="radio" />
+                                                                 <label class="star-rating__label" (click)="setReview(item.id,5)" for="{{item.id}}1"><i class="material-icons">✰</i></label>
+                                                                 <input [checked]="verifReview(item.id , 4)"  class="star-rating__input" id="{{item.id}}2" name="{{item.id}}" type="radio" />
+                                                                 <label class="star-rating__label" (click)="setReview(item.id,4)" for="{{item.id}}2"><i class="material-icons">✰</i></label>
+                                                                 <input [checked]="verifReview(item.id , 3)" class="star-rating__input" id="{{item.id}}3" name="{{item.id}}" type="radio" />
+                                                                 <label class="star-rating__label" (click)="setReview(item.id,3)" for="{{item.id}}3"><i class="material-icons">✰</i></label>
+                                                                 <input [checked]="verifReview(item.id , 2)" class="star-rating__input" id="{{item.id}}4" name="{{item.id}}" type="radio" />
+                                                                 <label class="star-rating__label"  (click)="setReview(item.id,2)" for="{{item.id}}4"><i class="material-icons">✰</i></label>
+                                                                 <input [checked]="verifReview(item.id , 1)" class="star-rating__input" id="{{item.id}}5" name="{{item.id}}" type="radio" />
+                                                                 <label class="star-rating__label"  (click)="setReview(item.id,1)" for="{{item.id}}5"><i class="material-icons">✰</i></label>
+                                                             </div>
+                                                         </div>
+                                                     </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- commande details -->
+    <div  class="modal fade menu-order-detail order-detail" id="order_detail" tabindex="-1" role="dialog">
+        <div class="modal-dialog" style="    left: 50%;
+        transform: translateX(-50%);">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h2>détails de la commande</h2>
+                </div>
+                <div *ngIf="orderDetails" class="modal-body">
+                    <div class="order-detail-inner">
+                        <div class="description-holder">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="list-detail-options has-checkbox">
+                                    
+                                        <ul class="order-detail-options">
+                                            <li class="order-number">
+                                                <strong>numéro de commande :</strong>
+                                                <span>{{ orderDetails.id }}</span>
+                                            </li>
+                                            <li class="req-delivery">
+                                                <strong>Temps estimé de livraison:</strong>
+                                                <span>{{ orderDetails.temps }} </span>
+                                            </li>
+                                            <li class="created-date">
+                                                <strong>Date de livraison:</strong>
+                                                <span>{{  orderDetails.created_at.substring(1, 10) }} {{ orderDetails.created_at.substring(11, 19)}}</span>
+                                            </li>
+                                            <li class="created-date">
+                                                <strong>Adresse de livraison:</strong>
+                                                <span *ngIf="!orderDetails.arrivee">{{ userDetails.adresse }}</span>
+                                                <span *ngIf="orderDetails.arrivee">{{ orderDetails.arrivee }}</span>
+                                            </li>
+                                           
+                                            <li class="order-type">
+                                                <strong>Payment Status:</strong>
+                                                <span>{{ orderDetails.status }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="customer-detail-holder">
+                                        <h3>coordonnées du client</h3>
+                                        <ul class="customer-detail">
+                                            <li>
+                                                <strong>Nom :</strong>
+                                                <span>{{ userDetails.nom }} {{ userDetails.prenom }}</span>
+                                            </li>
+                                            <li>
+                                                <strong>Telephone :</strong>
+                                                <span>{{ userDetails.telephone }}</span>
+                                            </li>
+                                            <li>
+                                                <strong>Email :</strong>
+                                                <span>{{ userDetails.email }}</span>
+                                            </li>
+                                            <li>
+                                                <strong>Addresse :</strong>
+                                                <span >{{ userDetails.adresse }}</span>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="order-status-holder">
+                                        <div class="order-status-process order-status">
+                                             
+                                             <p *ngIf="orderDetails.status == 'Attendre'" [ngStyle]="{background: setEtat()}" >Votre commande est  en cours </p>
+                                             <p *ngIf="orderDetails.status == 'Livré'" [ngStyle]="{background: setEtat()}" >Votre commande est  Livré </p>
+                                             <p *ngIf="orderDetails.status == 'Bloqueé'" [ngStyle]="{background: setEtat()}" >Votre commande est  Refusé </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h2 class="heading">Le menu</h2>
+                                    <div class="responsive-table">
+                                        <ul class="categories-order table-generic">
+                                            <li class="order-heading-titles">
+                                                <div>Produit</div>
+                                                <div>Prix</div>
+                                            </li>
+                                            <li *ngFor="let item of orderDetails.repas" class="order-heading-titles">
+                                                <div>
+                                                    <h4>{{item.libelle}}</h4>
+                                                    <h5>{{item.description}}</h5>
+                                                </div>
+                                                <div><span class="category-price">{{item.prix}}  TND</span></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                            <h3>Total</h3>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                            <ul class="order-detail-options order-total">
+                                                <li class="order-type total-price">
+                                                    <span>{{ orderDetails.prix }} TND</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function ($) {
+            document.getElementById('reviwelist').style.height = '100%';
+            $(document).ready(function () {
+                $(".order-detail .modal-dialog .modal-content").mCustomScrollbar({
+                    setHeight: 724,
+                    theme: "minimal-dark",
+                    mouseWheelPixels: 100
+                });
+            });
+        })(jQuery);
+    </script>
+</div>

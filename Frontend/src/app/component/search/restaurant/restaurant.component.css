@@ -1,0 +1,80 @@
+/* la zone de déplacement */
+input[type=range].custom-slider::-webkit-slider-runnable-track {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;  /* supprimé définie sur l'input */
+  }
+  /* le curseur */
+  input[type=range].custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;       /* également nécessaire sur le curseur */
+    width: 1em;
+    height: inherit;                /* s'adapte à la hauteur de l'input */
+    border: none;
+    border-radius: 0;               /* pris en compte sur Webkit et Edge */
+    background: currentColor;       /* pris en compte sur Webkit only */
+  }
+
+  input[type=range].custom-slider {
+    -webkit-appearance: none;     /*nécessaire pour Chrome */
+    padding: 0;                   /* nécessaire pour IE */
+    font: inherit;                /* même rendu suivant font document */
+    outline: none;
+    color: #f30;                  /* sert pour couleur de référence, via currentColor, pour le curseur */
+    opacity: .8;
+    background: #CCC;             /* sert pour couleur de fond de la zone de déplacement */
+    box-sizing: border-box;       /* même modèle de boîte pour tous */
+    transition: opacity .2s;
+    cursor: pointer;
+  }
+
+  * la zone de déplacement */
+input[type=range].custom-slider::-moz-range-track {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;  /* supprimé définie sur l'input */
+}
+/* le curseur */
+input[type=range].custom-slider::-moz-range-thumb {
+  width: 1em;
+  height: inherit;                /* s'adapte à la hauteur de l'input */
+  border: none;                   /* supprimer la bordure */
+  border-radius: 0;               /* supprimer le rayon */
+  background: currentColor;
+}
+/* barre progression avant */
+input[type=range].custom-slider::-moz-range-progress {
+  height: 0;
+  background: transparent;        /* supprime barre progression avant */
+}
+
+
+/* la zone de déplacement */
+input[type=range].custom-slider::-ms-track {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    color: transparent;             /* supprime les graduations pour IE */
+    background-color: transparent;  /* supprimé définie sur l'input */
+  }
+  /* le curseur */
+  input[type=range].custom-slider::-ms-thumb {
+    width: 1em;
+    height: inherit;                /* s'adapte à la hauteur de l'input */
+    border: none;                   /* supprimer la bordure */
+    border-radius: 0;               /* supprimer le rayon */
+    background: currentColor;
+  }
+  /* la tooltip de la valeur */
+  input[type=range].custom-slider::-ms-tooltip {
+    display: none;                  /* supprime l'affichage de la valeur au survol */
+  }
+  /* barre progression avant */
+  input[type=range].custom-slider::-ms-fill-lower {
+    background: transparent;
+  }
+  /* barre progression après */
+  input[type=range].custom-slider::-ms-fill-upper {
+    background: transparent;
+  }

@@ -1,0 +1,9 @@
+.pos{
+    position: absolute;
+    top: 44px;
+    left: 21px;
+    color: green;
+}
+.form-control {
+    padding-left: 24px;
+}

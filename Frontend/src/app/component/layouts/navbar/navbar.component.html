@@ -1,0 +1,96 @@
+<!--header starts-->
+<header id="header" class="header-scroll top-header headrom">
+    <!-- .navbar -->
+    <nav class="navbar navbar-dark">
+        <div class="container">
+            <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse"
+                data-target="#mainNavbarCollapse">&#9776;</button>
+            <a class="navbar-brand" routerLink="/"> <img class="img-rounded"
+                    src="../../../../assets/images/kgsexpress.png" alt="">
+            </a>
+            <div class="collapse navbar-toggleable-md  float-lg-right" id="mainNavbarCollapse">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"> <a class="nav-link" routerLink="/home" routerLinkActive="active">Accueil <span
+                                class="sr-only">(current)</span></a> </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">Rechercher</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" [routerLink]="['/search/restaurant']"
+                            routerLinkActive="active">Restaurant</a>
+                            <a class="dropdown-item" [routerLink]="['/search/repas']" routerLinkActive="active">Repas</a>
+                            <a class="dropdown-item" [routerLink]="['/search/map/repas']" routerLinkActive="active">Map Repas</a>
+
+                        </div>
+                    </li>
+
+ 
+                    <li class="nav-item "> <a class="nav-link" [routerLink]="['/contact']" routerLinkActive="active"
+                            role="button" aria-haspopup="true" aria-expanded="false">Contact</a>
+                    </li>
+                    <li class="nav-item cart-navbar">
+                        <a (click)="isOpenCart=!isOpenCart" id="cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            Panier
+                            <span class="badge">{{this.cart.numberItem}}</span>
+                        </a>
+                    </li>
+
+                    <li *ngIf="!auth.logedIn()" class="nav-item dropdown header-my-account ">
+                        <div class="dropdown az-filled">
+                            <div style="    border: dashed white;     cursor: pointer;     padding: 5px 13px;" class="link">
+                                <a data-toggle="modal" data-target="#login-modal" style="color:white">
+                                    <span>Login/Register</span>
+
+                                </a>
+                                <label for="login-register-toggle"></label>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li *ngIf="auth.logedIn()" class="nav-item dropdown"> <a class="nav-link dropdown-toggle"
+                            data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> Mon compte </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" [routerLink]="['/user/edit']"
+                                routerLinkActive="active">Profile</a>
+
+                            <a class="dropdown-item" [routerLink]="['/user/order-list']" routerLinkActive="router-link-active" >Mes Commandes </a>
+                            <a class="dropdown-item"  (click)="logout()" >Déconnecter</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" [routerLink]="['/checkout']" routerLinkActive="active" >Checkout</a>
+                        </div>
+                    </li>
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+    <!-- /.navbar -->
+    <div *ngIf="isOpenCart" id="cartContent" class="container-cart">
+        <div class="shopping-cart">
+            <div class="shopping-cart-header">
+                <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{{cart.numberItem}}</span>
+                <div class="shopping-cart-total">
+                    <span class="lighter-text">Total: </span>
+                    <span class="main-color-text">{{cart.total}} TND</span>
+                </div>
+            </div>
+            <!--end shopping-cart-header -->
+
+            <ul class="shopping-cart-items">
+                <li *ngFor="let item of this.cart.items|slice:0:4; let i=index" class="clearfix">
+                    <img src="{{verifLogo(item.product.photo,item.product.name)}}" alt="item1" />
+                    <span class="item-name">{{item.product.name}}</span>
+                    <span class="item-price">{{item.product.prix}} TND</span>
+                    <span class="item-quantity">Quantity: {{item.quantity}}</span>
+                </li>
+            </ul>
+
+            <a (click)="goTo('/checkout')" class="button">Checkout</a>
+        </div>
+        <!--end shopping-cart -->
+    </div>
+    <!--end container -->
+</header>
+<!-- banner part starts -->

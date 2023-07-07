@@ -1,0 +1,72 @@
+
+.fa-angle-down {
+    position: absolute;
+    color: #9097a1;
+    font-size: 12px;
+    top: 10px;
+    right: 10px;
+}
+.close {
+    background-color: white;
+}
+
+
+.user-dashboard .order-list .rating-holder .rating-box {
+    font-size: 20px;
+    height: 25px;
+    letter-spacing: 1px;
+    color: #ffbc00;
+}
+
+
+
+.chosen-select-single{
+    padding: 0;
+    font-size: 9px;
+    height: 28px;
+    padding-left: 10px;
+}
+
+
+.columns {
+    display: -webkit-box;
+    display: flex;
+  }
+  
+  .star-rating {
+    -webkit-box-flex: 0;
+            flex: 0 0 auto;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+            flex-direction: row-reverse;
+    -webkit-box-pack: end;
+            justify-content: flex-end;
+    color: rgba(0, 0, 0, 0.3);
+  }
+  .star-rating:hover .star-rating__input + * {
+    color: rgba(0, 0, 0, 0.3);
+  }
+  .star-rating__input {
+    display: none;
+  }
+  .star-rating__label {
+    cursor: pointer;
+    margin: 0 !important;
+    display: -webkit-box;
+    display: flex;
+  }
+  .star-rating__label:hover {
+    color: orange !important;
+  }
+  .star-rating__label:hover ~ * {
+    color: orange !important;
+  }
+  .star-rating__input:checked + * {
+    color: orange;
+  }
+  .star-rating__input:checked + * ~ * {
+    color: orange;
+  }
+  
